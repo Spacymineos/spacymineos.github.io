@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spacymineos — Deprecated Archive</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #050d1a;
+      color: #cde8ff;
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, #ffffff55, transparent),
+        radial-gradient(1px 1px at 25% 55%, #ffffff33, transparent),
+        radial-gradient(1px 1px at 40% 10%, #ffffff44, transparent),
+        radial-gradient(1px 1px at 55% 85%, #ffffff22, transparent),
+        radial-gradient(1px 1px at 70% 35%, #ffffff55, transparent),
+        radial-gradient(1px 1px at 85% 65%, #ffffff33, transparent),
+        radial-gradient(1px 1px at 15% 75%, #ffffff44, transparent),
+        radial-gradient(1px 1px at 60% 48%, #ffffff22, transparent),
+        radial-gradient(1px 1px at 92% 20%, #ffffff33, transparent),
+        radial-gradient(1px 1px at 33% 92%, #ffffff44, transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #0ff2;
+      border: 1px solid #0ff5;
+      color: #00e5ff;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 0 30px #00e5ff88;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: #7ab8d4;
+      font-style: italic;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #00e5ff, transparent);
+      margin: 0 auto 2rem;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.75rem;
+      color: #3a7090;
+    }
+
+    .stats span { color: #00e5ff; font-weight: 700; }
+
+    .search-bar {
+      width: 100%;
+      background: #0a1628;
+      border: 1px solid #1a3a5c;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      color: #cde8ff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-bar:focus { border-color: #00e5ff66; }
+    .search-bar::placeholder { color: #2a5070; }
+
+    .repos {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 3rem;
+      min-height: 100px;
+    }
+
+    .repo-card {
+      background: #0a1628;
+      border: 1px solid #1a3a5c;
+      border-radius: 10px;
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: left;
+    }
+
+    .repo-card:hover {
+      border-color: #00e5ff55;
+      box-shadow: 0 0 16px #00e5ff1a;
+    }
+
+    .repo-info { flex: 1; }
+
+    .repo-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #00e5ff;
+      margin-bottom: 0.3rem;
+    }
+
+    .repo-desc {
+      font-size: 0.72rem;
+      color: #7ab8d4;
+      margin-bottom: 0.4rem;
+    }
+
+    .repo-meta {
+      font-size: 0.65rem;
+      color: #2a5878;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .repo-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    .repo-tags {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+      margin-left: 1rem;
+      flex-shrink: 0;
+    }
+
+    .tag {
+      font-size: 0.62rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .tag-archived {
+      background: #ff4d4d18;
+      border: 1px solid #ff4d4d44;
+      color: #ff7070;
+    }
+
+    .tag-fork {
+      background: #ffaa0018;
+      border: 1px solid #ffaa0044;
+      color: #ffaa00;
+    }
+
+    .tag-lang {
+      background: #00e5ff18;
+      border: 1px solid #00e5ff33;
+      color: #00e5ff99;
+    }
+
+    .loading {
+      color: #2a5070;
+      font-size: 0.8rem;
+      font-style: italic;
+      padding: 2rem;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .empty-state {
+      background: #0a1628;
+      border: 1px dashed #1a3a5c;
+      border-radius: 10px;
+      padding: 2rem;
+      color: #3a6080;
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    .error-state {
+      background: #1a0a0a;
+      border: 1px dashed #5c1a1a;
+      border-radius: 10px;
+      padding: 2rem;
+      color: #804040;
+      font-size: 0.8rem;
+    }
+
+    footer {
+      font-size: 0.7rem;
+      color: #2a5070;
+      margin-top: 1rem;
+    }
+
+    footer a { color: #00e5ff88; text-decoration: none; }
+    footer a:hover { color: #00e5ff; }
+
+    .last-updated {
+      font-size: 0.65rem;
+      color: #1a3a5a;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="badge">🚀 Deprecated Archive</div>
+  <h1>Spacymineos</h1>
+  <p class="tagline">Old code, preserved in space. Deprecated — not deleted.</p>
+  <div class="divider"></div>
+
+  <div class="stats" id="stats">
+    <div>Repos: <span id="count">...</span></div>
+    <div>Stars: <span id="stars">...</span></div>
+    <div>Forks: <span id="forks">...</span></div>
+  </div>
+
+  <input
+    class="search-bar"
+    id="search"
+    type="text"
+    placeholder="🔍 Search repos..."
+    oninput="filterRepos()"
+  />
+
+  <div class="repos" id="repos">
+    <div class="loading">🌌 Fetching repos from the void...</div>
+  </div>
+
+  <footer>
+    Maintained by <a href="https://github.com/aminegames125" target="_blank">@aminegames125</a>
+    · <a href="https://github.com/Spacymineos" target="_blank">GitHub Org</a>
+  </footer>
+  <div class="last-updated" id="last-updated"></div>
+
+</div>
+
+<script>
+  const ORG = 'Spacymineos';
+  const API = `https://api.github.com/orgs/${ORG}/repos?per_page=100&sort=updated`;
+
+  let allRepos = [];
+
+  async function fetchRepos() {
+    try {
+      const res = await fetch(API, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+
+      if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+      allRepos = await res.json();
+
+      // Exclude .github and github.io repo from index
+      allRepos = allRepos.filter(r =>
+        r.name !== '.github' && r.name !== `${ORG.toLowerCase()}.github.io`
+      );
+
+      // Sort: archived first, then by last updated
+      allRepos.sort((a, b) => {
+        if (a.archived && !b.archived) return -1;
+        if (!a.archived && b.archived) return 1;
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      });
+
+      renderStats(allRepos);
+      renderRepos(allRepos);
+
+      document.getElementById('last-updated').textContent =
+        `Last fetched: ${new Date().toUTCString()}`;
+
+    } catch (err) {
+      document.getElementById('repos').innerHTML = `
+        <div class="error-state">
+          ⚠️ Could not load repos — ${err.message}<br/>
+          <small>Check back later or visit the <a href="https://github.com/${ORG}" target="_blank">GitHub org</a> directly.</small>
+        </div>`;
+    }
+  }
+
+  function renderStats(repos) {
+    document.getElementById('count').textContent = repos.length;
+    document.getElementById('stars').textContent = repos.reduce((s, r) => s + r.stargazers_count, 0);
+    document.getElementById('forks').textContent = repos.reduce((s, r) => s + r.forks_count, 0);
+  }
+
+  function renderRepos(repos) {
+    const container = document.getElementById('repos');
+
+    if (repos.length === 0) {
+      container.innerHTML = `<div class="empty-state">🌌 No repos found drifting in the void yet.</div>`;
+      return;
+    }
+
+    container.innerHTML = repos.map(repo => {
+      const desc = repo.description || '<i>No description provided.</i>';
+      const updated = new Date(repo.updated_at).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+
+      const tags = [];
+      if (repo.archived) tags.push(`<span class="tag tag-archived">⚠ archived</span>`);
+      if (repo.fork) tags.push(`<span class="tag tag-fork">⑂ fork</span>`);
+      if (repo.language) tags.push(`<span class="tag tag-lang">${repo.language}</span>`);
+
+      return `
+        <a class="repo-card" href="${repo.html_url}" target="_blank">
+          <div class="repo-info">
+            <div class="repo-name">📦 ${repo.name}</div>
+            <div class="repo-desc">${desc}</div>
+            <div class="repo-meta">
+              <span>⭐ ${repo.stargazers_count}</span>
+              <span>⑂ ${repo.forks_count}</span>
+              <span>🕓 ${updated}</span>
+            </div>
+          </div>
+          <div class="repo-tags">${tags.join('')}</div>
+        </a>`;
+    }).join('');
+  }
+
+  function filterRepos() {
+    const query = document.getElementById('search').value.toLowerCase();
+    const filtered = allRepos.filter(r =>
+      r.name.toLowerCase().includes(query) ||
+      (r.description && r.description.toLowerCase().includes(query)) ||
+      (r.language && r.language.toLowerCase().includes(query))
+    );
+    renderRepos(filtered);
+  }
+
+  fetchRepos();
+</script>
+</body>
+</html>
